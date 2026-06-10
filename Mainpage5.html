@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EL T.R.A.C.E.R. | Tactical Hub</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --navy: #0d110d; --gold: #c7a93a; --slate: #2c3e50; --border: #e2e8f0; --alert: #e74c3c; --success: #2ecc71; }
+        body { color: #1a1a1a; font-family: 'Inter', sans-serif; line-height: 1.6; margin: 0; background: #fff; overflow-x: hidden; }
+
+        .contract-header {
+            background: #000; color: white; padding: 10px 0; font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase; font-size: 0.6rem; letter-spacing: 2.5px; border-bottom: 2px solid var(--gold);
+        }
+        .contract-container { max-width: 1200px; margin: auto; padding: 0 2em; display: flex; justify-content: space-between; align-items: center; }
+        
+        header { background: var(--navy); color: white; padding: 40px 0; border-bottom: 1px solid var(--gold); }
+        .header-content { max-width: 1200px; margin: auto; padding: 0 2em; display: flex; justify-content: space-between; align-items: center; }
+
+        .brand-title { 
+            font-family: 'Orbitron', sans-serif; font-size: 2.4rem; font-weight: 900; letter-spacing: 12px; margin: 0;
+            background: linear-gradient(90deg, #fff 0%, var(--gold) 50%, #fff 100%);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 6s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        #satViewport { width: 120px; height: 120px; background: rgba(255,255,255,0.02); border-radius: 50%; border: 1px solid rgba(199,169,58,0.2); }
+
+        .nav-bar { background: white; border-bottom: 1px solid #e0e0e0; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: auto; display: flex; align-items: center; justify-content: space-between; }
+        .nav-link { 
+            padding: 20px 25px; text-decoration: none; color: #555; font-weight: 700; 
+            text-transform: uppercase; font-size: 0.7rem; font-family: 'Orbitron', sans-serif; border-right: 1px solid #eee; transition: 0.2s; cursor: pointer;
+        }
+        .nav-link:hover { color: var(--gold); background: #fcfcfc; }
+        
+        .login-btn-nav {
+            background: var(--navy); color: white !important; font-size: 0.65rem; letter-spacing: 2px;
+            padding: 10px 25px; border-radius: 4px; margin-right: 20px; border: 1px solid var(--gold);
+        }
+
+        #loginOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 17, 13, 0.98); z-index: 1000; align-items: center; justify-content: center;
+        }
+        .login-card { background: #fff; padding: 40px; border-top: 5px solid var(--gold); width: 100%; max-width: 380px; text-align: center; }
+        .google-btn { 
+            background: #fff; border: 1px solid #ddd; padding: 12px; width: 100%; 
+            display: flex; align-items: center; justify-content: center; cursor: pointer; 
+            font-family: 'Inter'; font-weight: 600; margin-bottom: 20px; transition: 0.3s;
+        }
+        .google-btn:hover { background: #f9f9f9; }
+        .divider { margin: 20px 0; font-size: 0.7rem; color: #888; font-family: 'Orbitron'; }
+
+        .hero { 
+            position: relative; background: linear-gradient(rgba(13, 17, 13, 0.8), rgba(13, 17, 13, 0.95)), url('bees1.jpg'); 
+            background-size: cover; background-position: center; background-attachment: fixed; padding: 140px 0; color: white; text-align: center;
+        }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -1px; }
+
+        .section-container { max-width: 1200px; margin: auto; padding: 80px 2em; }
+        .feature-card { 
+            background: #fff; border: 1px solid #ddd; padding: 45px; min-height: 380px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative; overflow: hidden;
+        }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); border-color: var(--gold); }
+        
+        .btn-action {
+            background: var(--navy); color: #fff; padding: 18px; text-decoration: none; font-weight: 700;
+            font-family: 'Orbitron', sans-serif; text-transform: uppercase; font-size: 0.7rem; text-align: center;
+            letter-spacing: 2px; transition: 0.3s; border: 1px solid var(--navy); cursor: pointer;
+        }
+        .btn-action:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+        .tracer-input { width: 100%; border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; font-family: 'Inter'; font-size: 0.8rem; box-sizing: border-box; }
+
+        /* DASHBOARD STYLES */
+        #adminDashboard { display: none; padding: 60px 2em; max-width: 1200px; margin: auto; }
+        .telemetry-val { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; color: var(--navy); }
+        .status-badge { background: var(--navy); color: var(--gold); padding: 5px 12px; font-family: 'Orbitron'; font-size: 0.7rem; display: inline-block; margin-bottom: 15px; border: 1px solid var(--gold); }
+        
+        #dataHistoryLog { 
+            background: #0d110d; color: #2ecc71; padding: 15px; font-family: monospace; 
+            font-size: 0.75rem; border: 1px solid var(--gold); min-height: 100px; max-height: 300px; overflow-y: auto;
+            line-height: 1.4; border-radius: 4px;
+        }
+        .log-entry { border-bottom: 1px solid rgba(199,169,58,0.2); padding: 8px 0; }
+        
+        footer { background: #000; color: #444; padding: 80px 0; text-align: center; border-top: 2px solid var(--gold); }
+    </style>
+</head>
+<body>
+
+<div id="loginOverlay">
+    <div class="login-card">
+        <h2 style="font-family:'Orbitron'; font-size: 1rem; margin-bottom: 25px;">SECURE_AUTHENTICATION</h2>
+        <button id="googleAuth" class="google-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" style="width:18px; margin-right:12px;">
+            Continue with Google
+        </button>
+        <div class="divider">OR USE_PASSKEY</div>
+        <input type="email" id="loginEmail" class="tracer-input" placeholder="EMAIL_ADDRESS">
+        <input type="password" id="loginPass" class="tracer-input" placeholder="PASSWORD">
+        <button id="authBtn" class="btn-action" style="width: 100%; margin-bottom: 10px;">Login</button>
+        <button id="createBtn" style="background:none; border:none; color:var(--gold); font-family:'Orbitron'; font-size:0.6rem; cursor:pointer; text-transform:uppercase;">[ Create New Account ]</button>
+        <br><br>
+        <button onclick="toggleLogin()" style="background:none; border:none; color:#888; font-size:0.6rem; cursor:pointer; text-transform:uppercase;">Abort_Uplink</button>
+    </div>
+</div>
+
+<div class="contract-header">
+    <div class="contract-container">
+        <div><span style="color:var(--gold)">●</span> BROADCAST_ID: EL_TRACER_MAIN</div>
+        <div id="authStatus" style="opacity:0.8;">STATUS: GUEST_SESSION</div>
+    </div>
+</div>
+
+<header>
+    <div class="header-content">
+        <div>
+            <h1 class="brand-title">EL T.R.A.C.E.R.</h1>
+            <span style="font-family:'Orbitron'; color:var(--gold); font-size:0.65rem; letter-spacing:4px; font-weight:700;">POLLINATOR STABILITY NETWORK</span>
+        </div>
+        <div id="satViewport"><svg viewBox="0 0 200 200"><g id="satGroup"></g></svg></div>
+    </div>
+</header>
+
+<div class="nav-bar">
+    <div class="nav-container">
+        <div style="display:flex;">
+            <a href="/" class="nav-link">Portal</a>
+            <a href="#" class="nav-link">Telemetry</a>
+            <a href="#" class="nav-link">Infrastructure</a>
+        </div>
+        <div style="display:flex; align-items:center;">
+            <a id="navLogin" onclick="toggleLogin()" class="nav-link login-btn-nav">LOGIN</a>
+            <a id="navLogout" onclick="handleLogout()" class="nav-link" style="display:none; color:red;">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div id="guestUI">
+    <div class="hero">
+        <div style="max-width: 900px; margin: auto;">
+            <h1 id="heroTitle">Predictive Resilience Hub</h1>
+            <p>Advanced infrastructure for biological asset defense and deterministic environmental monitoring.</p>
+            <a href="#intake" class="btn-action" style="padding: 18px 40px; background: var(--gold); color: #000;">Initialize Access</a>
+        </div>
+    </div>
+
+    <div class="section-container" id="intake">
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-md-1-3" style="padding: 15px;">
+                <div class="feature-card">
+                    <div>
+                        <h2 style="font-family:'Orbitron'; font-size:1.2rem;">Sentinel Grid</h2>
+                        <input type="text" id="nodeName" class="tracer-input" placeholder="Entity Name">
+                        <input type="email" id="nodeEmail" class="tracer-input" placeholder="Contact Email">
+                    </div>
+                    <div>
+                        <button onclick="submitLOI('Sentinel Grid')" class="btn-action" style="width:100%;">Request Node</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-3" style="padding: 15px;">
+                <div class="feature-card">
+                    <div>
+                        <h2 style="font-family:'Orbitron'; font-size:1.2rem;">Asset Sponsorship</h2>
+                        <input type="text" id="assetName" class="tracer-input" placeholder="Full Name">
+                        <input type="email" id="assetEmail" class="tracer-input" placeholder="Contact Email">
+                    </div>
+                    <div>
+                        <button onclick="submitLOI('Asset Sponsorship')" class="btn-action" style="width:100%;">Secure Allocation</button>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-3" style="padding: 15px;">
+                <div class="feature-card">
+                    <div>
+                        <h2 style="font-family:'Orbitron'; font-size:1.2rem;">Hardware Ops</h2>
+                        <input type="text" id="hwName" class="tracer-input" placeholder="Shipping Entity">
+                        <input type="email" id="hwEmail" class="tracer-input" placeholder="Contact Email">
+                    </div>
+                    <div>
+                        <button onclick="submitLOI('Hardware Ops')" class="btn-action" style="width:100%;">Order Asset Set</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="adminDashboard">
+    <div style="background:var(--navy); padding:20px; border-left:4px solid var(--gold); margin-bottom:30px;">
+        <h2 style="font-family:'Orbitron'; color:white; margin:0; font-size:1rem;">
+            NODE_UPLINK // <span id="nodeIdDisplay" style="color:var(--gold);">SCANNING...</span> 
+            <span id="trendDisplay" style="margin-left:20px; font-size:0.8rem; opacity:0.7;"></span>
+        </h2>
+    </div>
+
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-3" style="padding:10px;">
+            <div class="feature-card" style="min-height:auto; background:#fcfcfc;">
+                <h3 style="font-family:'Orbitron'; font-size:0.7rem; color:#888; letter-spacing:2px;">ATMOSPHERIC</h3>
+                <div class="telemetry-val"><span id="uiTemp">--</span>°C</div>
+                <div style="font-family:'Orbitron'; color:var(--gold); font-size:1.2rem; font-weight:700;">CO2: <span id="uiCO2">--</span></div>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-3" style="padding:10px;">
+            <div class="feature-card" style="min-height:auto; background:#fcfcfc;">
+                <h3 style="font-family:'Orbitron'; font-size:0.7rem; color:#888; letter-spacing:2px;">ENV_MATRIX</h3>
+                <div style="font-family:'Orbitron'; font-size:1.1rem; margin-bottom:10px;">HUM: <span id="uiHum" style="color:var(--gold)">--</span>%</div>
+                <div style="font-family:'Orbitron'; font-size:1.1rem;">PRES: <span id="uiPres" style="color:var(--gold)">--</span></div>
+                <div style="font-family:'Orbitron'; font-size:0.7rem; margin-top:10px; color:#aaa;">GAS_STD: <span id="uiGas">--</span></div>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-3" style="padding:10px;">
+            <div class="feature-card" style="min-height:auto; border-color:var(--gold);">
+                <h3 style="font-family:'Orbitron'; font-size:0.7rem; letter-spacing:2px;">PREDICTIVE</h3>
+                <div id="uiStatus" class="status-badge">STATUS: PENDING</div>
+                <p style="font-size:0.85rem; margin:5px 0;">PROJECTION: <strong id="uiForecast" style="color:var(--navy)">--</strong></p>
+                <p style="font-size:0.85rem; margin:5px 0;">STATUS_KEY: <span id="uiStatusKey" style="color:var(--gold)">ANALYZING</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <h3 style="font-family:'Orbitron'; font-size:0.7rem; color:#888; letter-spacing:2px; margin-bottom:10px;">HISTORICAL_DATA_LOG [LIVE_FEED]</h3>
+        <div id="dataHistoryLog">SYSTEM_STANDBY: WAITING_FOR_UPLINK...</div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-logo" style="font-family:'Orbitron'; letter-spacing: 8px; color: #fff; font-size: 1.2rem; margin-bottom: 20px;">EL T.R.A.C.E.R.</div>
+    <p>© 2026 Olive Branch Trading LLC • Guymon, OK Hub</p>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAQOkFnWkVHehzykLjzCNtWSu5nOzT-7zk",
+        authDomain: "tracer-71caf.firebaseapp.com",
+        projectId: "tracer-71caf",
+        storageBucket: "tracer-71caf.firebasestorage.app",
+        messagingSenderId: "623065083155",
+        appId: "1:623065083155:web:f4e6692a76361f4e56fee6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    let refreshInterval = null;
+
+    // --- GLOBAL FUNCTIONS ---
+    window.toggleLogin = () => {
+        const overlay = document.getElementById('loginOverlay');
+        overlay.style.display = (overlay.style.display === 'flex') ? 'none' : 'flex';
+    };
+
+    window.handleLogout = () => {
+        clearInterval(refreshInterval);
+        signOut(auth);
+    };
+
+    window.submitLOI = async (type) => {
+        let name, email;
+        if(type === 'Sentinel Grid') { name = document.getElementById('nodeName').value; email = document.getElementById('nodeEmail').value; }
+        else if(type === 'Asset Sponsorship') { name = document.getElementById('assetName').value; email = document.getElementById('assetEmail').value; }
+        else { name = document.getElementById('hwName').value; email = document.getElementById('hwEmail').value; }
+        if(!name || !email) { alert("Missing Fields"); return; }
+        try {
+            await addDoc(collection(db, "submissions"), { type, name, email, timestamp: serverTimestamp() });
+            alert("UPLINK SUCCESSFUL - NODE REQUEST LOGGED");
+        } catch (e) { alert("Submission Failed"); }
+    };
+
+    // --- AUTH LISTENERS ---
+    document.getElementById('googleAuth').addEventListener('click', async () => {
+        try { await signInWithPopup(auth, provider); toggleLogin(); } catch (e) { console.error(e); }
+    });
+
+    document.getElementById('authBtn').addEventListener('click', async () => {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPass').value;
+        try { await signInWithEmailAndPassword(auth, email, pass); toggleLogin(); } catch (e) { alert("Invalid Credentials"); }
+    });
+
+    document.getElementById('createBtn').addEventListener('click', async () => {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPass').value;
+        try { await createUserWithEmailAndPassword(auth, email, pass); toggleLogin(); } catch (e) { alert("Account Creation Failed"); }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById('authStatus').innerText = `STATUS: ACTIVE_USER [${user.email}]`;
+            document.getElementById('guestUI').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            document.getElementById('navLogin').style.display = 'none';
+            document.getElementById('navLogout').style.display = 'block';
+            
+            fetchBridgeData(user.email);
+            if(refreshInterval) clearInterval(refreshInterval);
+            refreshInterval = setInterval(() => fetchBridgeData(user.email), 5000);
+        } else {
+            document.getElementById('authStatus').innerText = "STATUS: GUEST_SESSION";
+            document.getElementById('guestUI').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('navLogin').style.display = 'block';
+            document.getElementById('navLogout').style.display = 'none';
+        }
+    });
+
+    // --- CORE DATA LOGIC ---
+    async function fetchBridgeData(email) {
+        try {
+            const response = await fetch('http://127.0.0.1:5005/api/telemetry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email })
+            });
+            const data = await response.json();
+            
+            if(data && !data.error) {
+                // Main UI Updates
+                document.getElementById('nodeIdDisplay').innerText = data.node;
+                document.getElementById('uiTemp').innerText = data.temp.toFixed(1);
+                document.getElementById('uiCO2').innerText = data.co2.toFixed(0);
+                
+                // New Environmental Matrix Updates
+                document.getElementById('uiHum').innerText = data.humidity;
+                document.getElementById('uiPres').innerText = data.pressure;
+                document.getElementById('uiGas').innerText = data.gas_std;
+                
+                // Status and Forecast
+                const statusEl = document.getElementById('uiStatus');
+                statusEl.innerText = `STATUS: ${data.status}`;
+                statusEl.style.color = data.status.includes("LIVE") ? "var(--success)" : "var(--gold)";
+                document.getElementById('uiForecast').innerText = `${data.forecast} PPM`;
+                document.getElementById('uiStatusKey').innerText = data.trend;
+
+                // Log entry
+                const log = document.getElementById('dataHistoryLog');
+                if(data.history) {
+                    log.innerHTML = '';
+                    data.history.slice().reverse().forEach(e => {
+                        const div = document.createElementNS ? document.createElement('div') : null;
+                        div.className = 'log-entry';
+                        div.innerHTML = `[${e.timestamp}] CO2: ${e.co2} | TEMP: ${e.temp}°C | HUM: ${e.humidity}%`;
+                        log.appendChild(div);
+                    });
+                }
+            } else if(data.error) {
+                document.getElementById('nodeIdDisplay').innerText = "UNAUTHORIZED_NODE";
+            }
+        } catch (e) {
+            document.getElementById('nodeIdDisplay').innerText = "OFFLINE_UPLINK";
+        }
+    }
+</script>
+
+<script>
+    /* SATELLITE ANIMATION */
+    let time = 0;
+    function renderLoop() {
+        time += 0.012;
+        const group = document.getElementById('satGroup');
+        if(!group) return;
+        group.innerHTML = '';
+        const polygons = [];
+        const project = (v) => { const s = 500 / (500 + v.z); return { x: v.x * s + 100, y: v.y * s + 100 }; };
+        const transform = (v) => {
+            let x = v.x * Math.cos(time) - v.z * Math.sin(time);
+            let z = v.x * Math.sin(time) + v.z * Math.cos(time);
+            let y = v.y * Math.cos(0.2) - z * Math.sin(0.2);
+            return { x, y, z: v.y * Math.sin(0.2) + z * Math.cos(0.2) };
+        };
+        const addCube = (w, h, d, col, ox=0) => {
+            const v = [{x:-w+ox,y:-h,z:-d},{x:w+ox,y:-h,z:-d},{x:w+ox,y:h,z:-d},{x:-w+ox,y:h,z:-d},{x:-w+ox,y:-h,z:d},{x:w+ox,y:-h,z:d},{x:w+ox,y:h,z:d},{x:-w+ox,y:h,z:d}];
+            [[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6]].forEach(f => {
+                const tr = f.map(i => transform(v[i]));
+                const p = tr.map(project);
+                polygons.push({z: tr[0].z, path: `M${p[0].x},${p[0].y}L${p[1].x},${p[1].y}L${p[2].x},${p[2].y}L${p[3].x},${p[3].y}Z`, col});
+            });
+        };
+        addCube(10,14,10, "#c7a93a");
+        addCube(55,6,1, "#2c3e50", 65);
+        addCube(55,6,1, "#2c3e50", -65);
+        polygons.sort((a,b)=>b.z-a.z).forEach(p => {
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute('d', p.path);
+            path.setAttribute('fill', p.col);
+            group.appendChild(path);
+        });
+        requestAnimationFrame(renderLoop);
+    }
+    renderLoop();
+</script>
+</body>
+</html>
